@@ -1,0 +1,152 @@
+// https://bi.mentalyc.com/question/109-code-for-customer-profile
+
+with users_data_month_on_month as 
+    (
+    select user_id, user_status, user_email, user_created_date, date_format(user_created_date, '%y-%m-01') as user_created_month
+                  , count(distinct id) as subscriptionsCount
+                  , count(distinct date_format(from_unixtime(timestamp/1000), '%y-%m-01')) as subscriptions_months_count
+                  , min(date_format(from_unixtime(timestamp/1000), '%y-%m-%d')) first_susbscribed_day
+                  , min(date_format(from_unixtime(timestamp/1000), '%y-%m-01')) first_susbscribed_month
+                  
+                  , min(case when period = 'year' then date_format(from_unixtime(timestamp/1000), '%y-%m-01') end) as first_yearly_subscription_date
+                  , max(case when period = 'year' then date_format(from_unixtime(timestamp/1000), '%y-%m-01') end) as latest_yearly_subscription_date
+    
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-01-01' then 1 else 0 end) as "2022-01-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-02-01' then 1 else 0 end) as "2022-02-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-03-01' then 1 else 0 end) as "2022-03-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-04-01' then 1 else 0 end) as "2022-04-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-05-01' then 1 else 0 end) as "2022-05-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-06-01' then 1 else 0 end) as "2022-06-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-07-01' then 1 else 0 end) as "2022-07-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-08-01' then 1 else 0 end) as "2022-08-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-09-01' then 1 else 0 end) as "2022-09-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-10-01' then 1 else 0 end) as "2022-10-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-11-01' then 1 else 0 end) as "2022-11-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2022-12-01' then 1 else 0 end) as "2022-12-01"
+                  
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-01-01' then 1 else 0 end) as "2023-01-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-02-01' then 1 else 0 end) as "2023-02-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-03-01' then 1 else 0 end) as "2023-03-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-04-01' then 1 else 0 end) as "2023-04-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-05-01' then 1 else 0 end) as "2023-05-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-06-01' then 1 else 0 end) as "2023-06-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-07-01' then 1 else 0 end) as "2023-07-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-08-01' then 1 else 0 end) as "2023-08-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-09-01' then 1 else 0 end) as "2023-09-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-10-01' then 1 else 0 end) as "2023-10-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-11-01' then 1 else 0 end) as "2023-11-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2023-12-01' then 1 else 0 end) as "2023-12-01"
+                  
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-01-01' then 1 else 0 end) as "2024-01-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-02-01' then 1 else 0 end) as "2024-02-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-03-01' then 1 else 0 end) as "2024-03-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-04-01' then 1 else 0 end) as "2024-04-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-05-01' then 1 else 0 end) as "2024-05-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-06-01' then 1 else 0 end) as "2024-06-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-07-01' then 1 else 0 end) as "2024-07-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-08-01' then 1 else 0 end) as "2024-08-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-09-01' then 1 else 0 end) as "2024-09-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-10-01' then 1 else 0 end) as "2024-10-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-11-01' then 1 else 0 end) as "2024-11-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2024-12-01' then 1 else 0 end) as "2024-12-01"
+                  
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-01-01' then 1 else 0 end) as "2025-01-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-02-01' then 1 else 0 end) as "2025-02-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-03-01' then 1 else 0 end) as "2025-03-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-04-01' then 1 else 0 end) as "2025-04-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-05-01' then 1 else 0 end) as "2025-05-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-06-01' then 1 else 0 end) as "2025-06-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-07-01' then 1 else 0 end) as "2025-07-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-08-01' then 1 else 0 end) as "2025-08-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-09-01' then 1 else 0 end) as "2025-09-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-10-01' then 1 else 0 end) as "2025-10-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-11-01' then 1 else 0 end) as "2025-11-01"
+                  , max(case when date_format(from_unixtime(timestamp/1000), '%y-%m-01') = '2025-12-01' then 1 else 0 end) as "2025-12-01"
+    from mentalyc.subscription_events
+    join 
+        (
+        select distinct user_id, user_email, date_format(from_unixtime(created/1000), '%y-%m-%d') as user_created_date, user_status
+        from mentalyc.mentalyc_users 
+        where user_type = 'therapist' 
+        ) users_table
+        using(user_id)
+    left join 
+        (
+            (
+            select distinct user_id, 1 as team_possible
+            from mentalyc.mentalyc_users
+            where team_id is not null
+            )
+            union
+            (
+            select distinct user_id, 1 as team_possible
+            from mentalyc.subscription_events
+            where (lower(plan) = 'team' or seats>1) and amount>0 
+            )
+        ) all_team_possible
+        using(user_id)
+    where amount>0 and team_possible is null 
+    group by 1, 2, 3, 4, 5
+    )
+
+, yearly_subscription_data as 
+    (
+    select user_id, count(distinct stripe_subscription_id) as subs_ids, max(latest_subscription_date) as latest_subscription_date, max(latest_cancel_date) as latest_cancel_date
+                  , max(isLatestYearlySubscriptionCanceled) as isLatestYearlySubscriptionCanceled
+                  , max(isYearlySubscriber) as isYearlySubscriber
+    from 
+        (
+        select distinct user_id, stripe_subscription_id, latest_subscription_date, latest_cancel_date
+                               , case when latest_cancel_date>latest_subscription_date then 1 else 0 end as  isLatestYearlySubscriptionCanceled
+                               , case when latest_subscription_date >= current_date-interval'1'year then 1 else 0 end as isYearlySubscriber
+        from 
+            (
+            select distinct user_id, stripe_subscription_id, max(from_unixtime(timestamp/1000)) as latest_subscription_date 
+            from mentalyc.subscription_events
+                join 
+                (
+                select distinct user_id 
+                from mentalyc.subscription_events
+                where period = 'year'
+                ) a 
+                using(user_id)
+            where amount>0 and period = 'year'
+            group by 1, 2
+            ) a 
+            left join 
+            (
+            select distinct user_id, stripe_subscription_id, max(from_unixtime(timestamp/1000)) as latest_cancel_date 
+            from mentalyc.subscription_events
+                join 
+                (
+                select distinct user_id 
+                from mentalyc.subscription_events
+                where period = 'year'
+                ) a 
+                using(user_id)
+            where event_type = 'canceled' and period = 'year'
+            group by 1, 2
+            ) b 
+            using(user_id, stripe_subscription_id)
+        ) c
+    group by 1 
+    )
+ 
+select *
+from 
+    (
+    select user_id, user_status, user_email, user_created_date, user_created_month
+                  , subscriptionscount, subscriptions_months_count, first_susbscribed_day, first_susbscribed_month
+                  , first_yearly_subscription_date, latest_yearly_subscription_date
+                  , subs_ids, latest_subscription_date, latest_cancel_date
+                  , islatestyearlysubscriptioncanceled, isyearlysubscriber
+    
+                  , "2022-01-01", "2022-02-01", "2022-03-01", "2022-04-01", "2022-05-01", "2022-06-01", "2022-07-01", "2022-08-01", "2022-09-01", "2022-10-01", "2022-11-01", "2022-12-01"
+                  , "2023-01-01", "2023-02-01", "2023-03-01", "2023-04-01", "2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01"
+                  , "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01"
+                  , "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01"
+    
+    from users_data_month_on_month
+    left join yearly_subscription_data using(user_id)
+    ) table_users_activity
+order by user_id 
